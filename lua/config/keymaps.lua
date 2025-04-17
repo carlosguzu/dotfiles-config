@@ -45,6 +45,11 @@ keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
 -- keymap.set("n", "<C-S-k>", "<C-w>+")
 -- keymap.set("n", "<C-S-j>", "<C-w>-")
 --
+-- Custom
+
+-- Move line down (correct behavior)
+
+keymap.set("n", "<C-A-Down>", "yyp", opts)
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
