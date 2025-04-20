@@ -27,7 +27,7 @@ return {
               root_markers = {
                 "settings.gradle",
                 "settings.gradle.kts",
-                "pom.xml",
+                -- "pom.xml",
                 "build.gradle",
                 "mvnw",
                 "gradlew",
