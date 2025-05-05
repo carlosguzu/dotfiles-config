@@ -23,7 +23,7 @@ require("lazy").setup({
       --    colorscheme = "sonokai",
       --  }
     },
-    { import = "lazyvim.plugins.extras.ai.copilot" },
+    -- { import = "lazyvim.plugins.extras.ai.copilot" },
     -- Import extras modules
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
