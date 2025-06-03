@@ -11,27 +11,24 @@ return {
       },
       indent = { enable = true },
       
-      -- Solo parsers críticos para startup rápido
+      -- Parsers esenciales - instalar inmediatamente
       ensure_installed = {
-        "lua", "vim", -- Esenciales de Neovim
+        "lua", "vim", "vimdoc", -- Esenciales de Neovim
         "javascript", "typescript", "tsx", -- Tu stack principal
         "html", "css", -- Frontend básico
-        "json", -- Configuraciones
+        "json", "jsonc", -- Configuraciones
         "markdown", "markdown_inline", -- Documentación
       },
       
-      -- Mover parsers menos críticos a ignore_install
-      ignore_install = { 
-        "printf", "xml", "comment", "jsdoc",
-        -- Estos se pueden instalar bajo demanda:
-        "scss", "yaml", "bash", 
-        "go", "python", "php",
-        "gitignore", "graphql", "http", "sql", "query", "regex"
-      },
+      -- Auto install cuando abras archivos de estos tipos
+      auto_install = true,
+      
+      -- Remover ignore_install temporalmente para debugging
+      -- ignore_install = {},
       
       -- Desactivar query_linter que consume recursos
       query_linter = {
-        enable = false, -- Desactivar para mejor performance
+        enable = false,
       },
       
       -- Configuración mínima de incremental selection
@@ -44,5 +41,16 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+      
+      -- Forzar instalación de lua si no existe
+      vim.defer_fn(function()
+        local ts_parsers = require("nvim-treesitter.parsers")
+        if not ts_parsers.has_parser("lua") then
+          vim.cmd("TSInstall lua")
+        end
+      end, 100)
+    end,
   },
 }
