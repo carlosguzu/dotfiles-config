@@ -19,49 +19,65 @@ require("lazy").setup({
     -- Add LazyVim and import its plugins
     {
       "LazyVim/LazyVim",
-      import = "lazyvim.plugins", ---, opts = {
-      --    colorscheme = "sonokai",
-      --  }
+      import = "lazyvim.plugins",
+      priority = 10000,
     },
-    -- { import = "lazyvim.plugins.extras.ai.copilot" },
-    -- Import extras modules
+    -- Import extras modules (solo los que realmente uses)
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
-    -- { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- Import/override with your custom plugins
     { import = "plugins" },
   },
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    lazy = true, -- Ya tienes esto activado, excelente
+    version = false,
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { 
+    colorscheme = { "gruvbox-material" }, -- Solo tu tema principal
+    missing = true,
+  },
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+    enabled = false, -- Desactivar verificación automática
+    notify = false,
+  },
+  change_detection = {
+    enabled = false, -- Desactivar detección de cambios automática
+    notify = false,
+  },
   performance = {
+    cache = {
+      enabled = true,
+    },
+    reset_packpath = true,
     rtp = {
-      -- disable some rtp plugins
+      reset = true,
+      paths = {},
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
+        "matchit",
+        "matchparen", 
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
+        "man",
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
+        "logipat",
+        "rrhelper",
+        "spellfile_plugin",
+        "vimball",
+        "vimballPlugin",
       },
     },
+  },
+  ui = {
+    backdrop = 100,
   },
 })

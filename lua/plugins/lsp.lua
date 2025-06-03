@@ -2,10 +2,11 @@ return {
   -- tools
   {
     "williamboman/mason.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "luacheck",
-        "shellcheck",
+        "shellcheck", 
         "shfmt",
         "tailwindcss-language-server",
         "typescript-language-server",
@@ -19,9 +20,9 @@ return {
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       inlay_hints = { enabled = true },
-      ---@type lspconfig.options
       servers = {
         cssls = {},
         tailwindcss = {
@@ -61,22 +62,11 @@ return {
         },
         html = {},
         lua_ls = {
-          -- enabled = false,
           single_file_support = true,
           settings = {
             Lua = {
-              workspace = {
-                checkThirdParty = false,
-              },
-              completion = {
-                workspaceWord = true,
-                callSnippet = "Both",
-              },
-              misc = {
-                parameters = {
-                  -- "--log-level=trace",
-                },
-              },
+              workspace = { checkThirdParty = false },
+              completion = { workspaceWord = true, callSnippet = "Both" },
               hint = {
                 enable = true,
                 setType = false,
@@ -85,43 +75,12 @@ return {
                 semicolon = "Disable",
                 arrayIndex = "Disable",
               },
-              doc = {
-                privateName = { "^_" },
-              },
-              type = {
-                castNumberToInteger = true,
-              },
               diagnostics = {
                 disable = { "incomplete-signature-doc", "trailing-space" },
-                -- enable = false,
-                groupSeverity = {
-                  strong = "Warning",
-                  strict = "Warning",
-                },
-                groupFileStatus = {
-                  ["ambiguity"] = "Opened",
-                  ["await"] = "Opened",
-                  ["codestyle"] = "None",
-                  ["duplicate"] = "Opened",
-                  ["global"] = "Opened",
-                  ["luadoc"] = "Opened",
-                  ["redefined"] = "Opened",
-                  ["strict"] = "Opened",
-                  ["strong"] = "Opened",
-                  ["type-check"] = "Opened",
-                  ["unbalanced"] = "Opened",
-                  ["unused"] = "Opened",
-                },
+                groupSeverity = { strong = "Warning", strict = "Warning" },
                 unusedLocalExclude = { "_*" },
               },
-              format = {
-                enable = false,
-                defaultConfig = {
-                  indent_style = "space",
-                  indent_size = "2",
-                  continuation_indent_size = "2",
-                },
-              },
+              format = { enable = false },
             },
           },
         },
@@ -129,32 +88,22 @@ return {
       setup = {},
     },
   },
+  
   {
-    "nvim-cmp",
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = { "hrsh7th/cmp-emoji" },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
     end,
   },
-    -- nvim-dap
-    {
-      "mfussenegger/nvim-dap",
-      config = function()
-        local dap = require("dap")
-        -- Configura tus adaptadores y configuraciones aquí
-      end,
-    },
-    -- lua/plugins/lsp.lua
--- return {
---   -- Otros plugins...
---   {
---     "neovim/nvim-lspconfig",
---     opts = function(_, opts)
---       local capabilities = require("cmp_nvim_lsp").default_capabilities()
---       opts.capabilities = capabilities
---     end,
---   },
--- }
-    
-
+  
+  {
+    "mfussenegger/nvim-dap",
+    event = "VeryLazy",
+    config = function()
+      local dap = require("dap")
+      -- Configura tus adaptadores aquí
+    end,
+  },
 }
